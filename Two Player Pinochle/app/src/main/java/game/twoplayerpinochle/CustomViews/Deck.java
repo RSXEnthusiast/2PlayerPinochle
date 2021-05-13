@@ -2,8 +2,8 @@ package game.twoplayerpinochle.CustomViews;
 
 import android.content.Context;
 
-public class deck extends cardContainer {
-    public deck(Context context) {
+public class Deck extends CardContainer {
+    public Deck(Context context) {
         super(context);
     }
 

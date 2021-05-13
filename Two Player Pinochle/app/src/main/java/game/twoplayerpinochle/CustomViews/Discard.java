@@ -2,8 +2,8 @@ package game.twoplayerpinochle.CustomViews;
 
 import android.content.Context;
 
-public class hand extends cardContainer {
-    public hand(Context context) {
+public class Discard extends CardContainer {
+    public Discard(Context context) {
         super(context);
     }
 
