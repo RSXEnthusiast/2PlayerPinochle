@@ -12,6 +12,10 @@
         <activity
             android:name="game.twoplayerpinochle.Pinochle"
             android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="game.twoplayerpinochle.Main"
+            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
