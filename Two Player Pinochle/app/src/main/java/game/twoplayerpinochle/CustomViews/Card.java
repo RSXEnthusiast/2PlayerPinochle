@@ -44,17 +44,17 @@ public class Card extends View implements View.OnTouchListener {
     private String getCardResourceName(int cardNum) {
         String stringBuilder = "";
         if (cardNum == -1) {
-            stringBuilder += getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE).getString("backStyle", "cardStyle not found");
-            stringBuilder += "back";
+            stringBuilder += getContext().getSharedPreferences("settings", Context.MODE_PRIVATE).getString("backStyle", "cardStyle not found");
+            stringBuilder += "_back";
         } else {
-            stringBuilder += getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE).getString("cardStyle", "cardStyle not found");
-            stringBuilder += getCardImageFileName(cardNum);
+            stringBuilder += getContext().getSharedPreferences("settings", Context.MODE_PRIVATE).getString("frontStyle", "cardStyle not found");
+            stringBuilder += "_" + getCardImageFileName(cardNum);
         }
         return stringBuilder;
     }
 
     public static String getCardImageFileName(int num) {
-        return getCardValue(num) + "_" + getCardSuit(num);
+        return getCardSuit(num) + "_" + getCardValue(num);
     }
 
     private static String getCardValue(int num) {

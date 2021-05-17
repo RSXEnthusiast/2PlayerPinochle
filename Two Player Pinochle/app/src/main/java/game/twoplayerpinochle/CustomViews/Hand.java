@@ -1,18 +1,78 @@
 package game.twoplayerpinochle.CustomViews;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.util.AttributeSet;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 public class Hand extends CardContainer {
     int deviceWidth;
 
     public Hand(Context context) {
-        super(context);
+        this(context, null, 0);
+    }
+
+    public Hand(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public Hand(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    void init(Context context) {
+        final Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Point deviceDisplay = new Point();
+        display.getSize(deviceDisplay);
+        deviceWidth = deviceDisplay.x;
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        final int count = getChildCount();
 
+        int cardWidth = getMeasuredWidth() / 8;
+        int cardHeight = cardWidth * (7 / 5);
+        if (cardHeight * 2 > getMeasuredHeight()) {
+            cardHeight = getMeasuredHeight() / 2;
+            cardWidth = cardHeight * (5 / 7);
+        }
+        int numBottomRow = getMeasuredWidth() / cardWidth;
+        int bottomRight = (getMeasuredWidth() / 2) + (numBottomRow * cardWidth / 2);
+        int i = count - 1;
+        int j = 0;
+        for (; i >= numBottomRow; i--, j++) {
+            View child = getChildAt(i - 1);
+
+            if (child.getVisibility() == GONE) {
+                return;
+            }
+
+            bottom = getMeasuredHeight();
+            top = getMeasuredHeight() - cardHeight;
+            right = bottomRight - (j * cardWidth);
+            left = right - cardWidth;
+            child.layout(left, top, right, bottom);
+        }
+        int numTopRow = count - numBottomRow;
+        int topRight = (getMeasuredWidth() / 2) + (numTopRow * cardWidth / 2);
+        j = 0;
+        for (; i >= 0; i--, j++) {
+            View child = getChildAt(i);
+
+            if (child.getVisibility() == GONE) {
+                return;
+            }
+
+            bottom = getMeasuredHeight() - cardHeight;
+            top = getMeasuredHeight() - (cardHeight * 2);
+            right = topRight - (j * cardWidth);
+            left = right - cardWidth;
+            child.layout(left, top, right, bottom);
+        }
     }
 
     @Override
