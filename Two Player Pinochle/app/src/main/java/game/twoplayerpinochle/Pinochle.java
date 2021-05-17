@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import game.twoplayerpinochle.CustomViews.Hand;
+
 public class Pinochle extends AppCompatActivity {
 
     @Override
@@ -19,7 +21,7 @@ public class Pinochle extends AppCompatActivity {
     }
 
     private void newGame() {
-
+        ((Hand)findViewById(R.id.hand)).initHand();
     }
 
     public static void cardTouched(int cardNum) {

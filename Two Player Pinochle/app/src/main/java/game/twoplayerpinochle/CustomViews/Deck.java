@@ -26,11 +26,15 @@ public class Deck extends CardContainer {
         Point deviceDisplay = new Point();
         display.getSize(deviceDisplay);
         deviceWidth = deviceDisplay.x;
+        for (int i = 0; i < 48; i++) {
+            addCard(i);
+        }
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (getChildCount() > 0) {
+            System.out.println("onLayout");
             getChildAt(0).layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
         }
     }

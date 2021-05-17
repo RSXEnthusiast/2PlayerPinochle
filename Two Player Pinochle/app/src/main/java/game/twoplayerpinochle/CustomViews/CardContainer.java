@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 
 public abstract class CardContainer extends ViewGroup {
-    ArrayList<Card> cards = new ArrayList<Card>();
     int deviceWidth;
 
     public CardContainer(Context context) {
@@ -30,19 +29,16 @@ public abstract class CardContainer extends ViewGroup {
         final Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point deviceDisplay = new Point();
         display.getSize(deviceDisplay);
-        cards = new ArrayList<Card>();
         deviceWidth = deviceDisplay.x;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCard(int card) {
+        addView(new Card(getContext(), card));
     }
 
-    public void removeCard(Card card) {
-        cards.remove(card);
+    public void removeCardByNum(int card) {
     }
 
-    public void removeCard(int index) {
-        cards.remove(index);
+    public void removeCardByIndex(int index) {
     }
 }

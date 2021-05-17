@@ -10,10 +10,15 @@ import game.twoplayerpinochle.Pinochle;
 public class Card extends View implements View.OnTouchListener {
     private int imageId;
     private int cardNum;
-    private boolean faceUp;
+    private boolean faceUp = true;
 
     public Card(Context context) {
         super(context);
+    }
+
+    public Card(Context context, int cardNum) {
+        this(context);
+        updateImage(cardNum);
     }
 
     @Override
@@ -58,39 +63,27 @@ public class Card extends View implements View.OnTouchListener {
     }
 
     private static String getCardValue(int num) {
-        switch (num % 13) {
-            case 1:
-                return "ace";
-            case 2:
-                return "two";
-            case 3:
-                return "three";
-            case 4:
-                return "four";
-            case 5:
-                return "five";
-            case 6:
-                return "six";
-            case 7:
-                return "seven";
-            case 8:
-                return "eight";
-            case 9:
-                return "nine";
-            case 10:
-                return "ten";
-            case 11:
-                return "jack";
-            case 12:
-                return "queen";
+        num = num / 2;
+        switch (num % 6) {
             case 0:
+                return "nine";
+            case 1:
+                return "jack";
+            case 2:
+                return "queen";
+            case 3:
                 return "king";
+            case 4:
+                return "ten";
+            case 5:
+                return "ace";
         }
         return "-1";
     }
 
     public static String getCardSuit(int num) {
-        switch ((num - 1) / 13) {
+        num = num / 2;
+        switch (num / 6) {
             case 0:
                 return "h";
             case 1:

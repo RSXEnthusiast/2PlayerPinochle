@@ -30,22 +30,29 @@ public class Hand extends CardContainer {
         deviceWidth = deviceDisplay.x;
     }
 
+    public void initHand() {
+        for (int i = 0; i < 15; i++) {
+            addCard(i);
+        }
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final int count = getChildCount();
 
-        int cardWidth = getMeasuredWidth() / 8;
-        int cardHeight = cardWidth * (7 / 5);
+        int cardWidth = (getMeasuredWidth() / 8) - 1;
+        int cardHeight = (int) (cardWidth * (7.0 / 5.0));
         if (cardHeight * 2 > getMeasuredHeight()) {
-            cardHeight = getMeasuredHeight() / 2;
-            cardWidth = cardHeight * (5 / 7);
+            cardHeight = (getMeasuredHeight() / 2) - 1;
+            cardWidth = (int) (cardHeight * (5.0 / 7.0));
         }
         int numBottomRow = getMeasuredWidth() / cardWidth;
-        int bottomRight = (getMeasuredWidth() / 2) + (numBottomRow * cardWidth / 2);
+        int bottomRight = (getMeasuredWidth() / 2) + ((numBottomRow * cardWidth) / 2);
         int i = count - 1;
         int j = 0;
-        for (; i >= numBottomRow; i--, j++) {
-            View child = getChildAt(i - 1);
+        for (; i >= numBottomRow-1; i--, j++) {
+            System.out.println(i);
+            View child = getChildAt(i);
 
             if (child.getVisibility() == GONE) {
                 return;
@@ -58,9 +65,10 @@ public class Hand extends CardContainer {
             child.layout(left, top, right, bottom);
         }
         int numTopRow = count - numBottomRow;
-        int topRight = (getMeasuredWidth() / 2) + (numTopRow * cardWidth / 2);
+        int topRight = (getMeasuredWidth() / 2) + ((numTopRow * cardWidth) / 2);
         j = 0;
         for (; i >= 0; i--, j++) {
+            System.out.println(i);
             View child = getChildAt(i);
 
             if (child.getVisibility() == GONE) {
