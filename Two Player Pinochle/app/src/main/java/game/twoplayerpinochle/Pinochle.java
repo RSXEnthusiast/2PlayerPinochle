@@ -15,6 +15,11 @@ public class Pinochle extends AppCompatActivity {
         ((TextView) findViewById(R.id.scoreText)).setTextSize(textSize);
         ((TextView) findViewById(R.id.meldText)).setTextSize(textSize);
         ((TextView) findViewById(R.id.bidText)).setTextSize(textSize);
+        newGame();
+    }
+
+    private void newGame() {
+
     }
 
     public static void cardTouched(int cardNum) {
