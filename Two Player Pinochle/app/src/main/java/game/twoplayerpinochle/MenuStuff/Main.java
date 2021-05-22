@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import game.twoplayerpinochle.Game.Pinochle;
+
 public class Main extends AppCompatActivity {
 
     @Override
