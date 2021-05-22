@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 
-public class Discard extends CardContainer {
+import game.twoplayerpinochle.Game.Pinochle;
+
+public class Discard extends CardContainer implements View.OnClickListener {
 
     public Discard(Context context) {
         this(context, null, 0);
@@ -33,5 +36,10 @@ public class Discard extends CardContainer {
         if (getChildCount() > 0) {
             getChildAt(0).layout(0, 0, getMeasuredWidth(), getMeasuredHeight());
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Pinochle.discardTouched();
     }
 }

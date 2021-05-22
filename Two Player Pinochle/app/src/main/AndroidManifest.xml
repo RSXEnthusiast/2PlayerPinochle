@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TwoPlayerPinochle">
         <activity
-            android:name="game.twoplayerpinochle.Pinochle"
+            android:name="game.twoplayerpinochle.Game.Pinochle"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="game.twoplayerpinochle.Main"
+            android:name="game.twoplayerpinochle.MenuStuff.Main"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -7,6 +7,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Hand extends CardContainer {
     int deviceWidth;
 
@@ -30,54 +33,39 @@ public class Hand extends CardContainer {
         deviceWidth = deviceDisplay.x;
     }
 
-    public void initHand() {
-        for (int i = 0; i < 15; i++) {
-            addCard(i);
-        }
-    }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        sortBySuit();
         final int count = getChildCount();
 
-        int cardWidth = (getMeasuredWidth() / 8) - 1;
+        int cardWidth = (getMeasuredWidth() / 8);
         int cardHeight = (int) (cardWidth * (7.0 / 5.0));
         if (cardHeight * 2 > getMeasuredHeight()) {
-            cardHeight = (getMeasuredHeight() / 2) - 1;
+            cardHeight = (getMeasuredHeight() / 2);
             cardWidth = (int) (cardHeight * (5.0 / 7.0));
         }
         int numBottomRow = getMeasuredWidth() / cardWidth;
-        int bottomRight = (getMeasuredWidth() / 2) + ((numBottomRow * cardWidth) / 2);
-        int i = count - 1;
-        int j = 0;
-        for (; i >= numBottomRow-1; i--, j++) {
-            System.out.println(i);
-            View child = getChildAt(i);
-
-            if (child.getVisibility() == GONE) {
-                return;
-            }
-
-            bottom = getMeasuredHeight();
-            top = getMeasuredHeight() - cardHeight;
-            right = bottomRight - (j * cardWidth);
-            left = right - cardWidth;
-            child.layout(left, top, right, bottom);
+        System.out.println(numBottomRow);
+        if (count < numBottomRow) {
+            numBottomRow = count;
         }
         int numTopRow = count - numBottomRow;
-        int topRight = (getMeasuredWidth() / 2) + ((numTopRow * cardWidth) / 2);
-        j = 0;
-        for (; i >= 0; i--, j++) {
-            System.out.println(i);
+        int cardsRightBottom = (getMeasuredWidth() / 2) + ((numBottomRow * cardWidth) / 2);
+        int cardsRightTop = (getMeasuredWidth() / 2) + ((numTopRow * cardWidth) / 2);
+        for (int i = count - 1, j = 0; i >= 0; i--, j++) {
             View child = getChildAt(i);
 
             if (child.getVisibility() == GONE) {
                 return;
             }
-
-            bottom = getMeasuredHeight() - cardHeight;
-            top = getMeasuredHeight() - (cardHeight * 2);
-            right = topRight - (j * cardWidth);
+            if (j < numBottomRow) {
+                bottom = getMeasuredHeight();
+                right = cardsRightBottom - (j * cardWidth);
+            } else {
+                bottom = getMeasuredHeight() - cardHeight;
+                right = cardsRightTop - (j * cardWidth) + getMeasuredWidth();
+            }
+            top = bottom - cardHeight;
             left = right - cardWidth;
             child.layout(left, top, right, bottom);
         }
@@ -122,5 +110,77 @@ public class Hand extends CardContainer {
         // Report our final dimensions.
         setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
                 resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
+    }
+
+    public void flipAll() {
+        for (int i = 0; i < getChildCount(); i++) {
+            ((Card) getChildAt(i)).flipCard();
+        }
+    }
+
+    public void flipAllFaceUp() {
+        for (int i = 0; i < getChildCount(); i++) {
+            ((Card) getChildAt(i)).setFaceUp(true);
+        }
+    }
+
+    public void flipAllFaceDown() {
+        for (int i = 0; i < getChildCount(); i++) {
+            ((Card) getChildAt(i)).setFaceUp(false);
+        }
+    }
+
+    public void sortBySuit() {
+        Card[] temp = new Card[getChildCount()];
+        System.out.println(temp.length);
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = removeCardByIndex(0);
+        }
+        sort(temp, 0, temp.length - 1);
+        for (int i = 0; i < temp.length; i++) {
+            addCard(temp[i]);
+        }
+    }
+
+    void merge(Card arr[], int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+        Card L[] = new Card[n1];
+        Card R[] = new Card[n2];
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[m + 1 + j];
+        int i = 0, j = 0;
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i].getCardNum() >= R[j].getCardNum()) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    void sort(Card arr[], int l, int r) {
+        if (l < r) {
+            int m = (l + r) / 2;
+            sort(arr, l, m);
+            sort(arr, m + 1, r);
+            merge(arr, l, m, r);
+        }
     }
 }

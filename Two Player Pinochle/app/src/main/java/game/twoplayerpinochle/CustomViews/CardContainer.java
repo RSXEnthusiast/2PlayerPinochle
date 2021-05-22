@@ -36,9 +36,18 @@ public abstract class CardContainer extends ViewGroup {
         addView(new Card(getContext(), card));
     }
 
-    public void removeCardByNum(int card) {
+    public void addCard(Card card) {
+        addView(card);
     }
 
-    public void removeCardByIndex(int index) {
+    public Card removeCardByNum(Card card) {
+        removeView(card);
+        return card;
+    }
+
+    public Card removeCardByIndex(int index) {
+        Card temp = (Card) getChildAt(index);
+        removeViewAt(index);
+        return temp;
     }
 }

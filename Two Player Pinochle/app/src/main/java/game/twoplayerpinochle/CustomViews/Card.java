@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
-import game.twoplayerpinochle.Pinochle;
+import game.twoplayerpinochle.Game.Pinochle;
 
 public class Card extends View implements View.OnTouchListener {
     private int imageId;
@@ -115,5 +115,9 @@ public class Card extends View implements View.OnTouchListener {
             this.faceUp = true;
         }
         this.invalidate();
+    }
+
+    public int getCardNum() {
+        return cardNum;
     }
 }

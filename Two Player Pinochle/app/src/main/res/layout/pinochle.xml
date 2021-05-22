@@ -8,13 +8,31 @@
         android:id="@+id/hand"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/grayedOut"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal4" />
+
+    <TextView
+        android:id="@+id/instructionText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal4"
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal3" />
 
     <game.twoplayerpinochle.CustomViews.Discard
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal3"
+        app:layout_constraintDimensionRatio="5:7"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVertical1"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal2" />
+
+    <View
+        android:id="@+id/highlightDiscard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal3"
         app:layout_constraintDimensionRatio="5:7"
@@ -47,13 +65,6 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVertical3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVertical4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -91,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal1"
-        app:layout_constraintEnd_toStartOf="@id/guidelineVertical1"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -249,6 +260,7 @@
     </TableLayout>
 
     <ImageView
+        android:id="@+id/opponentPicture"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1:1"
@@ -259,10 +271,20 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/settings_cog"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineVertical4"
+        app:layout_constraintStart_toStartOf="@id/guidelineVertical3"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <game.twoplayerpinochle.CustomViews.Hand
+        android:id="@+id/hand2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical3"
+        app:layout_constraintStart_toStartOf="@+id/guidelineVertical2"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
